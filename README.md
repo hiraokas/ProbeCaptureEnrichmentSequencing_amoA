@@ -1,6 +1,6 @@
 # Probe capture enrichment sequencing of amoA genes
 
-The scripts were prepared for a manuscript named 'Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations'
+The scripts were prepared for a manuscript named 'Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations'.
 
 ## Citation 
 ```
