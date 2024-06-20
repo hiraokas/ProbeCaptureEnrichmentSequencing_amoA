@@ -1,10 +1,10 @@
 # Probe capture enrichment sequencing of amoA genes
 
-The scripts were prepared for a manuscript named 'Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations'.
+The scripts were prepared for probe capture enrichment sequencing of amoA genes.
 
 The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
 
-The scripts are not developed as a stand-alone research software.
+The scripts are not developed as a stand-alone research software. Main script mainScript_amoA.sh and related modules are stored under src directory.
 
 ## Citation 
 ```
