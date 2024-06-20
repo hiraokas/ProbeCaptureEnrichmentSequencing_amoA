@@ -6,6 +6,27 @@ The official source code repository is at https://github.com/hiraokas/ProbeCaptu
 
 The scripts are not developed as a stand-alone research software. Main script mainScript_amoA.sh and related modules are stored under src directory.
 
+## Code
+The codes are written mostly in shell script.
+
+| File | Description |
+----|---- 
+| clustering_seq.sh |  |
+| fasta_seqlen_averageWithSD.sh |  |
+| fastq_pairend_marge.sh |  |
+| fastq_remove_chimera.sh |  |
+| getseq_blast_output.sh |  |
+| mainScript_amoA.sh |  |
+| mapping.sh |  |
+| phylogenetic_tree_construction.sh |  |
+| qsub_DDBJ.sh |  |
+| qsub_ES.sh |  |
+| qsub_short.sh |  |
+| rename_fastafile.sh |  |
+| tidy2table.py |  |
+
+## Dataset
+
 ## Citation 
 ```
 **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**
