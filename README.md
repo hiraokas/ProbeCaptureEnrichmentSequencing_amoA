@@ -29,7 +29,7 @@ The codes are written mostly in shell script.
 
 ## Citation 
 
-Hiraoka S. (2024) **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**. *bioRxiv*. doi:10.1101/2023.04.10.536224
+Hiraoka S. (2024) **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**. *bioRxiv*. doi:[10.1101/2023.04.10.536224](https://www.biorxiv.org/content/10.1101/2023.04.10.536224v2)
 
 ```
 **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**
@@ -45,6 +45,3 @@ Satoshi Hiraoka1†*, Minoru Ijichi2†, Hirohiko Takeshima2, Yohei Kumagai2, Ch
 
 Email: hiraokas@jamstec.go.jp, shiozaki@g.ecc.u-tokyo.ac.jp
 ```
-
-bioRxiv:
-https://www.biorxiv.org/content/10.1101/2023.04.10.536224v2 
