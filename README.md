@@ -28,6 +28,9 @@ The codes are written mostly in shell script.
 ## Dataset
 
 ## Citation 
+
+Hiraoka S. (2024) **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**. *bioRxiv*. doi:10.1101/2023.04.10.536224
+
 ```
 **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**
 
