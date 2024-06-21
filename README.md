@@ -9,21 +9,21 @@ The scripts are not developed as a stand-alone research software. Main script ma
 ## Code
 The codes are written mostly in shell script.
 
-| File | Description |
+| File                    | Description |
 ----|---- 
-| clustering_seq.sh |  |
-| fasta_seqlen_averageWithSD.sh |  |
-| fastq_pairend_marge.sh |  |
-| fastq_remove_chimera.sh |  |
-| getseq_blast_output.sh |  |
-| mainScript_amoA.sh |  |
-| mapping.sh |  |
-| phylogenetic_tree_construction.sh |  |
-| qsub_DDBJ.sh |  |
-| qsub_ES.sh |  |
-| qsub_short.sh |  |
-| rename_fastafile.sh |  |
-| tidy2table.py |  |
+| clustering_seq.sh       | Sequence clustering |
+| fasta_seqlen_averageWithSD.sh | Analysis of sequence length distribution |
+| fastq_pairend_marge.sh  | Merge paired-end short-read sequences to single reads |
+| fastq_remove_chimera.sh | Remove chimeric sequences |
+| getseq_blast_output.sh  | Get sequences using blast output file |
+| mainScript_amoA.sh      | Main script in this study |
+| mapping.sh              | Read mapping |
+| phylogenetic_tree_construction.sh | Phylogenetic tree estimation |
+| qsub_DDBJ.sh            | Autogenerate script for grid engine installed in supercomputing system at DDBJ, Japan |
+| qsub_ES.sh              | Autogenerate script for grid engine installed in Earth simulator system at JAMSTEC, Japan |
+| qsub_short.sh           | Wrapper of qsub_DDBJ.sh |
+| rename_fastafile.sh     | Convert filenames according to given correspondence table |
+| tidy2table.py           | Convert tidy data to table format |
 
 ## Dataset
 
