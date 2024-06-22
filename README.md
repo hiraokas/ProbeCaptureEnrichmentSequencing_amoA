@@ -6,7 +6,7 @@ The official source code repository is at https://github.com/hiraokas/ProbeCaptu
 
 The scripts are prepared for the analysis of the study. This means that the scripts are not implemented as a stand-alone research software. 
 
-Main script mainScript_amoA.sh and related modules are stored under "src" directory. Also, sequenecs data used in the study are atored in "data" directory
+Main script mainScript_amoA.sh and related modules are stored under "src" directory. Also, amoA/CuMMO gene sequenecs used in the study are stored in "data" directory.
 
 ## Code
 The codes are written mostly in shell script.
