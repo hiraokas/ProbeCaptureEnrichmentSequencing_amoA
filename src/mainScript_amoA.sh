@@ -182,7 +182,7 @@ done
 #======================================================================================================
 # similarity search of CDSs against CuMMO gene sequence database
 #======================================================================================================
-db=../DB/amoA_ijichiReference.dmnd
+db=../DB/CuMMOgeneDB.dmnd
 dbname=${db##*/}
 dbnamewe=${dbname%.*}
 thread=4
@@ -201,19 +201,19 @@ done
 #======================================================================================================
 # Get potential amoA gene sequences
 #======================================================================================================
-for f in ../blast/amoA_ijichiReference_*.blast; do 
+for f in ../blast/CuMMOgeneDB_*.blast; do 
     echo ${f}
-    filename=${f##*/}             # amoA_ijichiReference_0-St2.cds.blast
+    filename=${f##*/}             # CuMMOgeneDB_0-St2.cds.blast
     prefix=`echo ${filename} | cut -f3- -d "_" | rev | cut -f3- -d "." | rev`  #noncapture_ON1-0m
     ./getseq_blast_output.sh ../OTU/0_AllGenes/${prefix}.fasta  ${f}
 done
 
 #merge potential amoA gene sequences in each dataset 
 #length filtering
-cat ../CandidateSeq/amoA_ijichiReference_[0-2]*DNA.fasta     | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_MockDNA.fasta
-cat ../CandidateSeq/amoA_ijichiReference_rare*DNA.fasta      | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_RareMockDNA.fasta
-cat ../CandidateSeq/amoA_ijichiReference_*St-2.fasta         | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_testSt2.fasta
-cat ../CandidateSeq/amoA_ijichiReference_*capture*.fasta     | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_Real.fasta
+cat ../CandidateSeq/CuMMOgeneDB_[0-2]*DNA.fasta     | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_MockDNA.fasta
+cat ../CandidateSeq/CuMMOgeneDB_rare*DNA.fasta      | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_RareMockDNA.fasta
+cat ../CandidateSeq/CuMMOgeneDB_*St-2.fasta         | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_testSt2.fasta
+cat ../CandidateSeq/CuMMOgeneDB_*capture*.fasta     | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_Real.fasta
 
 #rename seqID for clustering
 cat ../OTU/1_ORF_lenTrim/AmoA_ORF_MockDNA.fasta     | awk '/^>/{print ">DNA_"  ++i; next}{print}' > ../OTU/2_ORF_RenameSeqID/AmoA_ORF_MockDNA.fasta
@@ -294,12 +294,12 @@ cat ../OTU/5_OTUwoSingleton/OTU_Real_rawSeqID.fasta        | awk '/^>/{print ">O
 # taxonomic annotation of OTUs
 #======================================================================================================
 #annotation using Ijichi reference
-seqkit translate ../DB/amoA_ijichiReference.fasta | sed -e "s/\s/_/g"> ../DB/amoA_ijichiReference.faa
-diamond makedb --in ../DB/amoA_ijichiReference.faa -d ../DB/amoA_ijichiReference --threads 4
-diamond blastx --db ../DB/amoA_ijichiReference.dmnd    --query ../OTU/6_OTU/OTU_MockDNA.fasta     --outfmt 6 --max-target-seqs 1 --threads 6 --subject-cover 80 --query-cover 80 --id 97 -o ../blast/Annotation_OTU_MockDNA.blast
-diamond blastx --db ../DB/amoA_ijichiReference.dmnd    --query ../OTU/6_OTU/OTU_RareMockDNA.fasta --outfmt 6 --max-target-seqs 1 --threads 6 --subject-cover 80 --query-cover 80 --id 97 -o ../blast/Annotation_OTU_RareMockDNA.blast
-diamond blastx --db ../DB/amoA_ijichiReference.dmnd    --query ../OTU/6_OTU/OTU_testSt2.fasta     --outfmt 6 --max-target-seqs 1 --threads 6 --subject-cover 80 --query-cover 80 --id 97 -o ../blast/Annotation_OTU_testSt2.blast
-diamond blastx --db ../DB/amoA_ijichiReference.dmnd    --query ../OTU/6_OTU/OTU_Real.fasta        --outfmt 6 --max-target-seqs 1 --threads 6                                             -o ../blast/AnnotationRough_OTU_Real.blast
+seqkit translate ../DB/CuMMOgeneDB.fasta | sed -e "s/\s/_/g"> ../DB/CuMMOgeneDB.faa
+diamond makedb --in ../DB/CuMMOgeneDB.faa -d ../DB/CuMMOgeneDB --threads 4
+diamond blastx --db ../DB/CuMMOgeneDB.dmnd    --query ../OTU/6_OTU/OTU_MockDNA.fasta     --outfmt 6 --max-target-seqs 1 --threads 6 --subject-cover 80 --query-cover 80 --id 97 -o ../blast/Annotation_OTU_MockDNA.blast
+diamond blastx --db ../DB/CuMMOgeneDB.dmnd    --query ../OTU/6_OTU/OTU_RareMockDNA.fasta --outfmt 6 --max-target-seqs 1 --threads 6 --subject-cover 80 --query-cover 80 --id 97 -o ../blast/Annotation_OTU_RareMockDNA.blast
+diamond blastx --db ../DB/CuMMOgeneDB.dmnd    --query ../OTU/6_OTU/OTU_testSt2.fasta     --outfmt 6 --max-target-seqs 1 --threads 6 --subject-cover 80 --query-cover 80 --id 97 -o ../blast/Annotation_OTU_testSt2.blast
+diamond blastx --db ../DB/CuMMOgeneDB.dmnd    --query ../OTU/6_OTU/OTU_Real.fasta        --outfmt 6 --max-target-seqs 1 --threads 6                                             -o ../blast/AnnotationRough_OTU_Real.blast
 
 #annotation using Alves 
 diamond makedb --in amoA_Alves_NatCommun2018.faa -d amoA_Alves_NatCommun2018 --threads 4
