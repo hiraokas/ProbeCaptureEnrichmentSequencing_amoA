@@ -5,7 +5,7 @@
 # hiraokas@jamstec.go.jp
 #
 # Description:
-# This is commands that used in the "amoA probe capture enrichment sequencing" study.
+# This is a main scripts used in the "amoA probe capture enrichment sequencing" study.
 # 
 # Citation:
 # **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**
@@ -22,6 +22,8 @@
 
 #======================================================================================================
 # QC for Illumina short reads
+# - standard QC
+# - remove chimera
 #======================================================================================================
 #remove adapter
 for f in ../data/01_flat/*_R1.fastq.gz; do ./fastq_adaptor_trim.sh ${f}; done
@@ -42,7 +44,6 @@ for f in ../data/16_merged/*.fastq; do
 done
 mv *.fa ../data/22_fasta/
 
-
 # remove chimera (Illumina amplicon) ---------------------------------------
 mkdir ../data/41_ampliconIllumina_concatenate_resource
 for f in ../data/15_nocomplex_upper100/ampliconIllumina_*_1.fastq.gz; do
@@ -50,7 +51,6 @@ for f in ../data/15_nocomplex_upper100/ampliconIllumina_*_1.fastq.gz; do
     P1=${f}
     P2=`echo ${f} | sed -e "s/_1.fastq.gz/_2.fastq.gz/g"`
     Prefix=`basename ${f} | rev | cut -f3- -d "." | cut -f2- -d "_" |rev`
-    #cp ${f} ../data/41_ampliconIllumina_concatenate_resource
     cat  ${f} |  seqkit fq2fa > ../data/41_ampliconIllumina_concatenate_resource/${Prefix}_1.fasta
     seqkit seq -pr ${P2} |  seqkit fq2fa | seqkit mutate -i 0:NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN --quiet  > ../data/41_ampliconIllumina_concatenate_resource/${Prefix}_2RevComp.fasta
 done
@@ -85,8 +85,7 @@ for f in ../data/44_ampliconIllumina_removeChimera_list/*; do
     cat ../data/15_nocomplex_upper100/${prefix}_1.fastq.gz | seqkit grep -f ${f} > ../data/45_ampliconIllumina_removeChimera/${prefix}_1.fastq.gz
 done
 
-
-#nonpareil-------------------------------------
+#nonpareil curve analysis-------------------------------------
 for f in ../data/16_merged/*.fastq; do
     FILENAME=${f##*/}
     BASE_FILENAME=${FILENAME%.*}
@@ -102,9 +101,10 @@ done
 
 
 #======================================================================================================
-# PacBio QC 
+# QC for PacBio HiFi reads 
 # - remove reads with <400bp and >1000 bp length 
 # - remove primer region (20bp)
+# - remove chimera
 #======================================================================================================
 cat ../data/30_PacBio_amplicon/amplicon_DNA.fastq      | seqkit seq -m 400 -M 1000 | seqkit subseq -r 21:-21 > ../data/31_QC/amplicon_DNA.fastq
 cat ../data/30_PacBio_amplicon/amplicon_OT3-0m.fastq   | seqkit seq -m 400 -M 1000 | seqkit subseq -r 21:-21 > ../data/31_QC/amplicon_OT3-0m.fastq
@@ -162,7 +162,7 @@ cd ../src/
 
 
 #======================================================================================================
-# Get CDSs using Prodigal
+# Get CDSs from assembled contigs
 #======================================================================================================
 for f in ../assembly/*SPAdes*.fasta; do 
     ./qsub_short.sh 1 ./genecall_prodigal.sh ${f} meta; 
@@ -180,7 +180,7 @@ done
 
 
 #======================================================================================================
-# blast CDSs against CuMMO sequence database
+# similarity search of CDSs against CuMMO gene sequence database
 #======================================================================================================
 db=../DB/amoA_ijichiReference.dmnd
 dbname=${db##*/}
@@ -199,7 +199,7 @@ done
 
 
 #======================================================================================================
-# Get potential amoA gene sequences using blast output file
+# Get potential amoA gene sequences
 #======================================================================================================
 for f in ../blast/amoA_ijichiReference_*.blast; do 
     echo ${f}
@@ -208,10 +208,8 @@ for f in ../blast/amoA_ijichiReference_*.blast; do
     ./getseq_blast_output.sh ../OTU/0_AllGenes/${prefix}.fasta  ${f}
 done
 
-
-#======================================================================================================
-# merge potential amoA gene sequences from  samples in each dataset after length filtering
-#======================================================================================================
+#merge potential amoA gene sequences in each dataset 
+#length filtering
 cat ../CandidateSeq/amoA_ijichiReference_[0-2]*DNA.fasta     | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_MockDNA.fasta
 cat ../CandidateSeq/amoA_ijichiReference_rare*DNA.fasta      | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_RareMockDNA.fasta
 cat ../CandidateSeq/amoA_ijichiReference_*St-2.fasta         | seqkit seq -m 400 -M 1000 > ../OTU/1_ORF_lenTrim/AmoA_ORF_testSt2.fasta
@@ -315,9 +313,9 @@ seqkit stat ../OTU/6_OTU/*.fasta
 
 
 #======================================================================================================
-#read mapping on OTU
+#read mapping to OTU, etc.
 #======================================================================================================
-#Mock read mapping on plasmid
+#Mock read mapping to the defined plasmids
 ./mapping.sh -t bowtie2 -b ../plasmid/pTAKN-2constracts6.fasta -I
 ./mapping.sh -t bowtie2 -b ../plasmid/plasmidALL.fasta         -I
 ./mapping.sh -t bowtie2 -b ../plasmid/pTAKN-2.fasta            -I
@@ -329,10 +327,9 @@ for f in ../data/16_merged/[0-2]*DNA.fastq; do ./qsub_short.sh 6 ./mapping.sh -t
 for f in ../data/16_merged/rare*.fastq;     do ./qsub_short.sh 6 ./mapping.sh -t bowtie2 -b ../plasmid/plasmidALL.fasta          -Y   -i ${f}; done 
 for f in ../data/16_merged/[0-2]*DNA.fastq; do ./qsub_short.sh 6 ./mapping.sh -t bowtie2 -b ../plasmid/pET.fasta                 -Y   -i ${f}; done 
 
-#summarize
+#result summarize
 for f in *_summary.tsv; do
     sample=`basename ${f} | cut -f3 -d "_"`
-    #ratio=`cat ${f} | grep "primary mapped (" | cut -f6 -d " " | cut -c2-`
     ratio=`cat ${f} | grep "primary mapped (" | sed -e "s/(//g"`
     echo -e "$sample\t$ratio"
 done
@@ -344,7 +341,7 @@ for f in ../data/16_merged/[0-2]*DNA.fa; do
     ./qsub_short.sh 6 blastn -db ../OTU/6_OTU/OTU_MockDNA -query ${f} -outfmt 6 -max_target_seqs 1 -num_threads 6 -out ../blast/blastn_${prefix}.blast
 done
 
-#using mapping base (bowtie2)
+#Read mapping to OTUs
 ./mapping.sh -t bowtie2 -b ../OTU/6_OTU/OTU_MockDNA.fasta     -I
 ./mapping.sh -t bowtie2 -b ../OTU/6_OTU/OTU_RareMockDNA.fasta -I
 ./mapping.sh -t bowtie2 -b ../OTU/6_OTU/OTU_testOT6.fasta     -I
@@ -359,8 +356,6 @@ for f in ../data/16_merged/*capture*.fastq; do ./qsub_short.sh 6 ./mapping.sh -t
 for f in ../data/33_removeChimera/ampliconPacBio_DNA.fa;   do a=`basename ${f} | cut -f1 -d "."`; echo ${a}; ./qsub_short.sh 6  ./mapping.sh -t bowtie2 -b ../OTU/6_OTU/OTU_MockDNA.fasta -i ${f}; done
 for f in ../data/33_removeChimera/ampliconPacBio_OT3-*.fa; do a=`basename ${f} | cut -f1 -d "."`; echo ${a}; ./qsub_short.sh 6  ./mapping.sh -t bowtie2 -b ../OTU/6_OTU/OTU_Real.fasta    -i ${f} ; done
 for f in ../data/45_ampliconIllumina_removeChimera/ampliconIllumina_*_1.fastq.gz; do ./qsub_short.sh 6 ./mapping.sh -t bowtie2 -b ../OTU/6_OTU/OTU_Real.fasta  -1 ${f} -2 `echo ${f}| sed -e "s/_1.fastq/_2.fastq/g"`  ; done 
-
-
 
 # mapped read count (will take a bit long minutes) 
 # for paired-end reads, only reads that both #1 and #2 were mapped were used
@@ -381,19 +376,14 @@ done
 # Make RPKMS table
 #======================================================================================================
 #calculate_FPKMS
-for f in ../mapping/*/bowtie2_OTU_*[0-2]*DNA_sorted.bam.counts;                  do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g" `; a=`seqkit stat ../data/16_merged/${prefix}.fastq     -T | tail -1 |cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_MockDNA_seqlen.tsv     ${f}; done
-for f in ../mapping/*/bowtie2_OTU_Rare*_sorted.bam.counts;                       do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g" `; a=`seqkit stat ../data/16_merged/${prefix}.fastq     -T | tail -1 |cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_RareMockDNA_seqlen.tsv ${f}; done
-for f in ../mapping/*/bowtie2_OTU_*St2_sorted.bam.counts;                        do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g" `; a=`seqkit stat ../data/16_merged/${prefix}.fastq     -T | tail -1 |cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_testSt2_seqlen.tsv     ${f}; done
-for f in ../mapping/*/bowtie2_OTU_*capture*_sorted.bam.counts;                   do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g" `; a=`seqkit stat ../data/16_merged/${prefix}.fastq     -T | tail -1 |cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_Real_seqlen.tsv        ${f}; done
+for f in ../mapping/*/bowtie2_OTU_*[0-2]*DNA_sorted.bam.counts;                  do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g"   `; a=`seqkit stat ../data/16_merged/${prefix}.fastq                              -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_MockDNA_seqlen.tsv     ${f}; done
+for f in ../mapping/*/bowtie2_OTU_Rare*_sorted.bam.counts;                       do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g"   `; a=`seqkit stat ../data/16_merged/${prefix}.fastq                              -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_RareMockDNA_seqlen.tsv ${f}; done
+for f in ../mapping/*/bowtie2_OTU_*St2_sorted.bam.counts;                        do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g"   `; a=`seqkit stat ../data/16_merged/${prefix}.fastq                              -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_testSt2_seqlen.tsv     ${f}; done
+for f in ../mapping/*/bowtie2_OTU_*capture*_sorted.bam.counts;                   do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g"   `; a=`seqkit stat ../data/16_merged/${prefix}.fastq                              -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_Real_seqlen.tsv        ${f}; done
 
-for f in ../mapping/*/bowtie2_OTU_MockDNA_ampliconPacBio_DNA_sorted.bam.counts;  do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g" `; a=`seqkit stat ../data/33_removeChimera/${prefix}.fa -T | tail -1 |cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_MockDNA_seqlen.tsv     ${f}; done
-for f in ../mapping/*/bowtie2_OTU_Real_ampliconPacBio_OT3-*_sorted.bam.counts;   do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g" `; a=`seqkit stat ../data/33_removeChimera/${prefix}.fa -T | tail -1 |cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_Real_seqlen.tsv        ${f}; done
-for f in ../mapping/*/bowtie2_OTU_Real_ampliconIllumina_*_sorted.bam.counts; do 
-    prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_1_sorted.bam.counts//g" `; 
-    echo ${prefix}
-    a=`seqkit stat ../data/45_ampliconIllumina_removeChimera/${prefix}_1.fastq.gz -T | tail -1 |cut -f4`;  
-    python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_Real_seqlen.tsv    ${f}; 
-done
+for f in ../mapping/*/bowtie2_OTU_MockDNA_ampliconPacBio_DNA_sorted.bam.counts;  do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g"   `; a=`seqkit stat ../data/33_removeChimera/${prefix}.fa                          -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_MockDNA_seqlen.tsv     ${f}; done
+for f in ../mapping/*/bowtie2_OTU_Real_ampliconPacBio_OT3-*_sorted.bam.counts;   do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_sorted.bam.counts//g"   `; a=`seqkit stat ../data/33_removeChimera/${prefix}.fa                          -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_Real_seqlen.tsv        ${f}; done
+for f in ../mapping/*/bowtie2_OTU_Real_ampliconIllumina_*_sorted.bam.counts;     do prefix=`basename ${f} | cut -f4- -d "_" | sed -e "s/_1_sorted.bam.counts//g" `; a=`seqkit stat ../data/45_ampliconIllumina_removeChimera/${prefix}_1.fastq.gz -T | tail -1 | cut -f4`;  python3 calculate_FPKMS.py ${a} ../OTU/6_OTU/OTU_Real_seqlen.tsv        ${f}; done
 
 rename "bowtie2_"    ""   ../abundance/*
 rename "_sorted.bam" ""   ../abundance/*
