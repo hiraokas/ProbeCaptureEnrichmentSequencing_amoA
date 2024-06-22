@@ -4,7 +4,9 @@ The scripts were prepared for probe capture enrichment sequencing of amoA genes.
 
 The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
 
-The scripts are not developed as a stand-alone research software. Main script mainScript_amoA.sh and related modules are stored under src directory.
+The scripts are prepared for the analysis of the study. This means that the scripts are not implemented as a stand-alone research software. 
+
+Main script mainScript_amoA.sh and related modules are stored under "src" directory. Also, sequenecs data used in the study are atored in "data" directory
 
 ## Code
 The codes are written mostly in shell script.
@@ -26,6 +28,11 @@ The codes are written mostly in shell script.
 | tidy2table.py           | Convert tidy data to table format |
 
 ## Dataset
+| File                    | Description |
+----|---- 
+|amoA_MockPlasmid.fasta| amoA gene sequences used for the Mock sample |
+|CuMMO_DB.fasta| CuMMO gene sequence database used for probe design|
+|CuMMO_Selected.fasta| Selected 20 CuMMO gene sequences used to retrieve CuMMO gene sequences from public gene database |
 
 ## Citation 
 
