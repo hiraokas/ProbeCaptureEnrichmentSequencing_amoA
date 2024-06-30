@@ -1,15 +1,14 @@
 # Probe capture enrichment sequencing of amoA genes
 
-The scripts were prepared for probe capture enrichment sequencing of amoA genes.
-
-The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
+The ammonia monooxygenase subunit A (amoA) gene has been used to investigate the phylogenetic diversity, spatial distribution, and activity of ammonia-oxidizing archaeal (AOA) and bacterial (AOB), which contribute significantly to the nitrogen cycle in various ecosystems. Amplicon sequencing of amoA is a widely used method; however, it produces inaccurate results owing to the lack of a ‘universal’ primer set. Moreover, currently available primer sets suffer from amplification biases, which can lead to severe misinterpretation. Although shotgun metagenomic and metatranscriptomic analyses are alternative approaches without amplification bias, the low abundance of target genes in heterogeneous environmental DNA restricts a comprehensive analysis to a realizable sequencing depth. In this study, we developed a probe set and bioinformatics workflow for amoA enrichment sequencing using a hybridization capture technique.
 
 The scripts are prepared for the analysis of the study. This means that the scripts are not implemented as a stand-alone research software. 
 
 Main script mainScript_amoA.sh and related modules are stored under "src" directory. Also, amoA/CuMMO gene sequenecs used in the study are stored in "data" directory.
+The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
 
 ## Code
-The codes are written mostly in shell script.
+The codes are written in shell script and python.
 
 | File                    | Description |
 ----|---- 
@@ -33,6 +32,31 @@ The codes are written mostly in shell script.
 |amoA_MockPlasmid.fasta| amoA gene sequences used for the Mock sample |
 |CuMMO_DB.fasta| CuMMO gene sequence database used for probe design|
 |CuMMO_Selected.fasta| Selected 20 CuMMO gene sequences used to retrieve CuMMO gene sequences from public gene database |
+
+
+## Dependencies
+- fastq2fasta.pl [(direct link)](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwj2jeSvru6GAxW6slYBHah0DWUQFnoECBAQAQ&url=http%3A%2F%2Fbrianknaus.com%2Fsoftware%2Fsrtoolbox%2Ffastq2fasta.pl&usg=AOvVaw0jCezWC5YM0DBNzazLZyxs&opi=89978449)
+- [TrimGalore](https://github.com/FelixKrueger/TrimGalore) - adapter trim
+- [PRINSEQ++](https://github.com/Adrian-Cantu/PRINSEQ-plus-plus) - remove low complexity sequences
+- [FLASH](https://github.com/dstreett/FLASH2) - merge paired-end reads
+- [metaSPAdes](https://github.com/ablab/spades) - Metagenomic assembly
+- [rnaSPAdes](https://github.com/ablab/spades) - Transcriptomic assembly
+- [Prodigal](https://github.com/hyattpd/Prodigal) - CDS prediction
+- [DIAMOND](https://github.com/bbuchfink/diamond) - Similarity search
+- [VSEARCH](https://github.com/torognes/vsearch) - Chimeric read prediction and removal
+- [SeqKit](https://bioinf.shenwei.me/seqkit/) - Sequence manipulation including length filtering
+- [MMseq2](https://github.com/soedinglab/MMseqs2) - Sequence clustering
+- [MAFFT](https://mafft.cbrc.jp/alignment/software/) - Sequence alignment
+- [FastTree2](https://www.microbesonline.org/fasttree/) - Phylogenetic tree prediction
+- [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) - Read mapping
+- [Nonpareil3](https://github.com/lmrodriguezr/nonpareil) - Metagenomic coverage estimation
+
+Also we used some tools and databases for detailed data analysis in this study.
+- [Ocean Data View](https://odv.awi.de/) - Oceanic diversity analysis
+- [MEGA X](https://www.megasoftware.net/) - Phylogenetic tree analysis
+- AOA amoA sequence database defined by Alves et al. [(Ref.)](https://www.nature.com/articles/s41467-018-03861-1) - Taxonomic assignments of AOA OTUs 
+
+
 
 ## Citation 
 
