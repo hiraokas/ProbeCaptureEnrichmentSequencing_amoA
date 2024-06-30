@@ -2,7 +2,7 @@
 
 The ammonia monooxygenase subunit A (amoA) gene has been used to investigate the phylogenetic diversity, spatial distribution, and activity of ammonia-oxidizing archaeal (AOA) and bacterial (AOB), which contribute significantly to the nitrogen cycle in various ecosystems. Amplicon sequencing of amoA is a widely used method; however, it produces inaccurate results owing to the lack of a ‘universal’ primer set. Moreover, currently available primer sets suffer from amplification biases, which can lead to severe misinterpretation. Although shotgun metagenomic and metatranscriptomic analyses are alternative approaches without amplification bias, the low abundance of target genes in heterogeneous environmental DNA restricts a comprehensive analysis to a realizable sequencing depth. In this study, we developed a probe set and bioinformatics workflow for amoA enrichment sequencing using a hybridization capture technique.
 
-The scripts are prepared for the analysis of the study. This means that the scripts are not implemented as a stand-alone research software. 
+Please note that the scripts were prepared for the analysis of the study. This means that the scripts were not implemented as a stand-alone research software. The analysis was performed on [the supercomputing system at National Institute of Genetics (NIG), Research Organization of Information and Systems (ROIS)](https://sc.ddbj.nig.ac.jp/en/), and [the Earth Simulator systems at JAMSTEC](https://www.jamstec.go.jp/es/en/).
 
 Main script mainScript_amoA.sh and related modules are stored under "src" directory. Also, amoA/CuMMO gene sequenecs used in the study are stored in "data" directory.
 The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
