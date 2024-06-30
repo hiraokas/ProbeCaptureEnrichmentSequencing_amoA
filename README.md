@@ -31,8 +31,7 @@ The codes are written in shell script and python.
 ----|---- 
 |amoA_MockPlasmid.fasta| amoA gene sequences used for the Mock sample |
 |CuMMO_DB.fasta| CuMMO gene sequence database used for probe design|
-|CuMMO_Selected.fasta| Selected 20 CuMMO gene sequences used to retrieve CuMMO gene sequences from public gene database |
-
+|CuMMO_Selected.fasta| Selected 20 CuMMO gene sequences used as queries to retrieve CuMMO gene sequences from public gene databases (NCBI nt and env_nt) |
 
 ## Dependencies
 - fastq2fasta.pl [(direct link)](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwj2jeSvru6GAxW6slYBHah0DWUQFnoECBAQAQ&url=http%3A%2F%2Fbrianknaus.com%2Fsoftware%2Fsrtoolbox%2Ffastq2fasta.pl&usg=AOvVaw0jCezWC5YM0DBNzazLZyxs&opi=89978449)
