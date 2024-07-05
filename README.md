@@ -20,9 +20,9 @@ The codes are written in shell script and python.
 | mainScript_amoA.sh      | Main script in this study |
 | mapping.sh              | Read mapping |
 | phylogenetic_tree_construction.sh | Phylogenetic tree estimation |
-| qsub_DDBJ.sh            | Autogenerate script for grid engine installed in supercomputing system at DDBJ, Japan |
-| qsub_ES.sh              | Autogenerate script for grid engine installed in Earth simulator system at JAMSTEC, Japan |
-| qsub_short.sh           | Wrapper of qsub_DDBJ.sh |
+| qsub_DDBJ.sh            | Autogenerate script for grid engine (supercomputing system at DDBJ, Japan) |
+| qsub_ES.sh              | Autogenerate script for grid engine (Earth simulator system at JAMSTEC, Japan) |
+| qsub_short.sh           | Wrapper of qsub_DDBJ.sh (supercomputing system at DDBJ, Japan) |
 | rename_fastafile.sh     | Convert filenames according to given correspondence table |
 | tidy2table.py           | Convert tidy data to table format |
 
