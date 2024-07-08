@@ -4,7 +4,7 @@ The ammonia monooxygenase subunit A (amoA) gene has been used to investigate the
 
 Please note that the scripts were prepared for the analysis of the study. This means that the scripts were not implemented as a stand-alone research software. The analysis was performed on [the supercomputing system at National Institute of Genetics (NIG), Research Organization of Information and Systems (ROIS)](https://sc.ddbj.nig.ac.jp/en/), and [the Earth Simulator systems at JAMSTEC](https://www.jamstec.go.jp/es/en/).
 
-Main script mainScript_amoA.sh and related modules are stored under "src" directory. Also, amoA/CuMMO gene sequenecs used in the study are stored in "data" directory.
+Main script mainScript_amoA.sh and related modules are stored under src/ directory. Also, amoA/CuMMO gene sequenecs used in the study are stored in data/ directory.
 The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
 
 ## Code
