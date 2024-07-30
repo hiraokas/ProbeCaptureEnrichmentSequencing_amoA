@@ -7,7 +7,7 @@ Please note that the scripts were prepared for the analysis of the study. This m
 Main script mainScript_amoA.sh and related modules are stored under src/ directory. Also, amoA/CuMMO gene sequenecs used in the study are stored in data/ directory.
 The official source code repository is at https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA.
 
-![image](https://github.com/hiraokas/ProbeCaptureEnrichmentSequencing_amoA/assets/6966312/baac1abe-5513-40fb-95c0-9be4a5a719fd)
+![A schematic overview of probe capture enrichment sequencing analysis](https://github.com/user-attachments/assets/a9236224-44af-40d7-b5a0-498aff56c6e4)
 
 ## Code
 The codes are written in shell script and python.
