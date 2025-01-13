@@ -1,4 +1,4 @@
-# Probe capture enrichment sequencing of amoA genes
+# Probe capture enrichment sequencing of <i>amoA</i> genes
 
 The ammonia monooxygenase subunit A (amoA) gene has been used to investigate the phylogenetic diversity, spatial distribution, and activity of ammonia-oxidizing archaeal (AOA) and bacterial (AOB), which contribute significantly to the nitrogen cycle in various ecosystems. Amplicon sequencing of amoA is a widely used method; however, it produces inaccurate results owing to the lack of a ‘universal’ primer set. Moreover, currently available primer sets suffer from amplification biases, which can lead to severe misinterpretation. Although shotgun metagenomic and metatranscriptomic analyses are alternative approaches without amplification bias, the low abundance of target genes in heterogeneous environmental DNA restricts a comprehensive analysis to a realizable sequencing depth. In this study, we developed a probe set and bioinformatics workflow for amoA enrichment sequencing using a hybridization capture technique.
 
@@ -61,10 +61,11 @@ Also we used some tools and databases for detailed data analysis in this study.
 
 ## Citation 
 
-Hiraoka S. (2024) **Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**. *bioRxiv*. doi:[10.1101/2023.04.10.536224](https://www.biorxiv.org/content/10.1101/2023.04.10.536224v2)
+Hiraoka S. (2024) **Probe capture enrichment sequencing of <i>amoA</i> genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**. *Molecular Ecology Resources*. doi:[10.1111/1755-0998.14042]
+https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.14042
 
 ```
-**Probe capture enrichment sequencing of amoA genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**
+**Probe capture enrichment sequencing of <i>amoA</i> genes discloses diverse ammonia-oxidizing archaeal and bacterial populations**
 
 Satoshi Hiraoka1†*, Minoru Ijichi2†, Hirohiko Takeshima2, Yohei Kumagai2, Ching-Chia Yang2, Yoko Makabe-Kobayashi2, Hideki Fukuda2, Susumu Yoshizawa2, Wataru Iwasaki2,3, Kazuhiro Kogure2, Takuhei Shiozaki2*
 
